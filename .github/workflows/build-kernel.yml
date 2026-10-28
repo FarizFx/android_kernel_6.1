@@ -16,7 +16,7 @@ jobs:
       - name: Checkout kernel (kbase)
         uses: actions/checkout@v4
         with:
-          repository: mt6897-devs/android_kernel_6.1
+          repository: FarizFx/android_kernel_6.1
           ref: lineage-23.2
           path: kernel
           fetch-depth: 1
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout device modules (kernelsrc)
         uses: actions/checkout@v4
         with:
-          repository: mt6897-devs/android_kernel_device_modules_6.1
+          repository: FarizFx/android_kernel_device_modules_6.1
           ref: lineage-23.2
           path: device_modules
           fetch-depth: 1
