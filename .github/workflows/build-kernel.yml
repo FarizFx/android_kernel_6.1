@@ -29,12 +29,16 @@ jobs:
           path: device_modules
           fetch-depth: 1
 
-      - name: Setup toolchain (AOSP clang r487747c)
+      - name: Setup toolchain (AOSP clang)
         run: |
           mkdir -p ${GITHUB_WORKSPACE}/toolchain
-          git clone --depth=1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git ${GITHUB_WORKSPACE}/toolchain/clang || \
-          curl -LSs -o clang.tar.gz "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main-kernel-build-2023/clang-r487747c.tar.gz" && \
-          mkdir -p ${GITHUB_WORKSPACE}/toolchain/clang && tar -xzf clang.tar.gz -C ${GITHUB_WORKSPACE}/toolchain/clang
+          if git clone --depth=1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git ${GITHUB_WORKSPACE}/toolchain/clang; then
+            echo "clang from gitlab mirror"
+          else
+            curl -LSs -o clang.tar.gz "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main-kernel-build-2023/clang-r487747c.tar.gz"
+            mkdir -p ${GITHUB_WORKSPACE}/toolchain/clang
+            tar -xzf clang.tar.gz -C ${GITHUB_WORKSPACE}/toolchain/clang
+          fi
           ls ${GITHUB_WORKSPACE}/toolchain/clang/bin/ | head
 
       - name: Build kernel Image
